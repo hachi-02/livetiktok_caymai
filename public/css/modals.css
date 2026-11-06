@@ -1,0 +1,496 @@
+/* ================= CHIẾU CHỈ THẦN TÀI PHÁN TRUYỀN (KHI TOP 1 GÕ COMMENT) ================= */
+.imperial-decree {
+  position: absolute;
+  top: 122px;
+  left: 10px;
+  right: 10px;
+  z-index: 23;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: linear-gradient(90deg, #6b0509 0%, #c9141d 20%, #ffd147 50%, #c9141d 80%, #6b0509 100%);
+  border: 2px solid #fff6b3;
+  border-radius: 14px;
+  padding: 7px 12px;
+  box-shadow: 0 8px 25px rgba(255, 196, 0, 0.75), inset 0 0 12px rgba(255, 255, 255, 0.45);
+  animation: popAlert 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.decree-dragon-left,
+.decree-dragon-right {
+  font-size: 24px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.7));
+  animation: dragonBob 0.9s ease-in-out infinite alternate;
+}
+
+.decree-content {
+  flex: 1;
+  text-align: center;
+  background: rgba(58, 3, 6, 0.88);
+  border: 1px solid var(--tet-gold);
+  border-radius: 10px;
+  padding: 4px 8px;
+}
+
+.decree-title {
+  font-size: 10px;
+  font-weight: 900;
+  color: #ffe885;
+  letter-spacing: 0.4px;
+}
+
+.decree-message {
+  font-size: 12.5px;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  margin-top: 1px;
+}
+
+@keyframes dragonBob {
+  0% { transform: translateY(-2px) scale(1); }
+  100% { transform: translateY(3px) scale(1.1); }
+}
+
+.throne-alert {
+  position: absolute;
+  top: 120px;
+  left: 14px;
+  right: 14px;
+  z-index: 20;
+  background: linear-gradient(90deg, #ffae00, #ff2a00, #ffae00);
+  border: 1.5px solid #fff7b2;
+  border-radius: 999px;
+  padding: 4px 10px;
+  text-align: center;
+  font-size: 11px;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(255, 60, 0, 0.7);
+  animation: popAlert 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes popAlert {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ================= CHIẾU ÔNG ĐỒ TẶNG CHỮ THƯ PHÁP VÀNG (POPUP VIP) ================= */
+.calligraphy-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 382px;
+  z-index: 25;
+  animation: unrollScroll 0.45s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes unrollScroll {
+  0% { transform: translate(-50%, -50%) scaleY(0.1) scaleX(0.85); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scaleY(1) scaleX(1); opacity: 1; }
+}
+
+.scroll-roller {
+  height: 14px;
+  background: linear-gradient(90deg, #6e3b06, #ffd147, #9e5808, #ffd147, #6e3b06);
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  border: 1.5px solid #fff2a6;
+}
+
+.scroll-body {
+  margin: 0 10px;
+  background: radial-gradient(circle at center, #b80f17 0%, #75060b 100%);
+  border-left: 4px double var(--tet-gold);
+  border-right: 4px double var(--tet-gold);
+  padding: 12px 14px;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
+  position: relative;
+}
+
+.scroll-body.grand-combo {
+  background: radial-gradient(circle at center, #d41920 0%, #5e0508 100%);
+  box-shadow: 0 0 35px rgba(255, 215, 0, 0.9);
+}
+
+.scroll-header-tag {
+  display: inline-block;
+  background: linear-gradient(90deg, #ffcf40, #ff9900);
+  color: #4a0404;
+  font-weight: 900;
+  font-size: 11px;
+  padding: 2px 12px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.vip-recipient {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(45, 2, 5, 0.65);
+  border: 1.5px solid var(--tet-gold);
+  border-radius: 12px;
+  padding: 6px 12px;
+  margin-bottom: 10px;
+}
+
+.vip-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2.5px solid var(--tet-gold);
+  object-fit: cover;
+  box-shadow: 0 0 12px rgba(255, 209, 71, 0.8);
+}
+
+.vip-info {
+  text-align: left;
+}
+
+.vip-name {
+  font-size: 15px;
+  font-weight: 900;
+  color: #fff6b3;
+}
+
+.vip-gift-tag {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #ffccd0;
+}
+
+.calligraphy-circle {
+  position: relative;
+  background: radial-gradient(circle, #fff8dc 0%, #f5deb3 100%);
+  border: 3px solid var(--tet-gold);
+  border-radius: 16px;
+  padding: 14px 10px;
+  margin: 6px auto 10px;
+  box-shadow: inset 0 0 18px rgba(184, 115, 11, 0.45), 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+.calligraphy-circle.imperial-gold-paper {
+  background: radial-gradient(circle, #fff7b0 0%, #ffd03b 55%, #d48800 100%);
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 28px rgba(255, 215, 0, 0.95), inset 0 0 20px rgba(255, 255, 255, 0.75);
+}
+
+.calligraphy-circle.imperial-gold-paper .calligraphy-char {
+  color: #7a0308;
+  text-shadow: 0 2px 0 #fff8c4, 0 0 16px rgba(255, 255, 255, 0.9);
+}
+
+.calligraphy-char {
+  font-family: 'Charm', 'Playfair Display', serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #9e0b12;
+  text-shadow: 1px 2px 0px #ffd147, 0 4px 12px rgba(158, 11, 18, 0.35);
+}
+
+.red-seal {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  background: #c9141d;
+  color: #fff;
+  border: 1.5px solid #ffdf80;
+  border-radius: 4px;
+  font-size: 8px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.05;
+  transform: rotate(-8deg);
+}
+
+.calligraphy-couplet {
+  font-family: 'Charm', serif;
+  font-size: 16px;
+  color: #ffe999;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.lixi-reward-box {
+  background: linear-gradient(90deg, #ffba08, #faa307);
+  color: #4a0404;
+  font-weight: 900;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ================= POPUP NỔ HŨ CÂY MAI ================= */
+.jackpot-banner {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 396px;
+  z-index: 26;
+  animation: jackpotCenterPop 0.55s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes jackpotCenterPop {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3) rotate(-5deg);
+    opacity: 0;
+    filter: brightness(2);
+  }
+  65% {
+    transform: translate(-50%, -50%) scale(1.06) rotate(1.5deg);
+    opacity: 1;
+    filter: brightness(1.25);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+.jackpot-card {
+  background: linear-gradient(135deg, #ffae00 0%, #d90429 50%, #ffae00 100%);
+  border: 3px solid #fff8b8;
+  border-radius: 18px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 0 45px rgba(255, 208, 0, 0.95);
+  animation: jackpotGlowPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes jackpotGlowPulse {
+  0% { box-shadow: 0 0 35px rgba(255, 208, 0, 0.85), inset 0 0 14px rgba(255, 255, 255, 0.35); transform: scale(1); }
+  100% { box-shadow: 0 0 60px rgba(255, 230, 0, 1), inset 0 0 26px rgba(255, 255, 255, 0.65); transform: scale(1.02); }
+}
+
+.jackpot-icon {
+  font-size: 36px;
+  margin-bottom: 4px;
+  animation: jackpotIconBounce 0.65s ease-in-out infinite alternate;
+}
+
+@keyframes jackpotIconBounce {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-6px) scale(1.12); }
+}
+
+.jackpot-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  margin-bottom: 6px;
+}
+
+.jackpot-desc {
+  font-size: 12.5px;
+  color: #fff8d6;
+  line-height: 1.4;
+}
+
+/* ================= ĐẠI LỄ ĐĂNG CƠ TOP 1: NGUYÊN CON RỒNG VÀNG CHẠY DỌC VIỀN BẢNG ================= */
+.coronation-modal {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 430px;
+  height: 390px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 28;
+  animation: coronationCenterGrand 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+#dragonBorderCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 32;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px rgba(255, 200, 0, 0.95));
+}
+
+@keyframes coronationCenterGrand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.25) translateY(25px);
+    opacity: 0;
+    filter: brightness(2.2);
+  }
+  62% {
+    transform: translate(-50%, -50%) scale(1.05) translateY(-4px);
+    opacity: 1;
+    filter: brightness(1.3);
+  }
+  82% {
+    transform: translate(-50%, -50%) scale(0.98) translateY(0);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) translateY(0);
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+.coronation-card {
+  position: relative;
+  width: 366px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 28%, #9e0b14 0%, #4a0206 68%, #210002 100%);
+  border: 2.5px solid rgba(255, 215, 71, 0.85);
+  border-radius: 20px;
+  padding: 18px 14px;
+  text-align: center;
+  box-shadow: 0 0 45px rgba(255, 180, 0, 0.75), inset 0 0 28px rgba(255, 200, 0, 0.35);
+  z-index: 29;
+}
+
+.imperial-corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-color: #ffe875;
+  border-style: solid;
+  pointer-events: none;
+  z-index: 2;
+}
+.corner-tl { top: 6px; left: 6px; border-width: 3px 0 0 3px; border-top-left-radius: 8px; }
+.corner-tr { top: 6px; right: 6px; border-width: 3px 3px 0 0; border-top-right-radius: 8px; }
+.corner-bl { bottom: 6px; left: 6px; border-width: 0 0 3px 3px; border-bottom-left-radius: 8px; }
+.corner-br { bottom: 6px; right: 6px; border-width: 0 3px 3px 0; border-bottom-right-radius: 8px; }
+
+.coronation-halo {
+  position: absolute;
+  top: -60%;
+  left: -30%;
+  width: 160%;
+  height: 220%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255, 215, 0, 0.16) 0deg 12deg,
+    transparent 12deg 24deg
+  );
+  animation: spinHalo 14s linear infinite;
+  pointer-events: none;
+}
+
+.coronation-top-crest {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(90deg, #ffae00, #fff3a1, #ffae00);
+  color: #520307;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 4px 14px;
+  border-radius: 999px;
+  letter-spacing: 0.6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  margin-bottom: 4px;
+}
+
+.coronation-subtitle {
+  position: relative;
+  font-size: 15px;
+  font-weight: 900;
+  color: #fff6b3;
+  text-shadow: 0 2px 8px rgba(255, 140, 0, 0.9);
+  margin-bottom: 12px;
+}
+
+.coronation-avatar-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.coronation-avatar-ring {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, #fff8b8, #ffae00, #ff2a00, #fff8b8);
+  box-shadow: 0 0 28px rgba(255, 215, 0, 1);
+  animation: avatarRingPulse 1.1s ease-in-out infinite alternate;
+}
+
+@keyframes avatarRingPulse {
+  0% { transform: scale(1); box-shadow: 0 0 22px rgba(255, 215, 0, 0.9); }
+  100% { transform: scale(1.06); box-shadow: 0 0 38px rgba(255, 240, 120, 1); }
+}
+
+.coronation-crown {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28px;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.85));
+  z-index: 3;
+  animation: crownFloat 0.85s ease-in-out infinite alternate;
+}
+
+@keyframes crownFloat {
+  0% { transform: translateX(-50%) translateY(0) scale(1); }
+  100% { transform: translateX(-50%) translateY(-5px) scale(1.12); }
+}
+
+.coronation-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2.5px solid #ffffff;
+}
+
+.coronation-king-name {
+  position: relative;
+  font-size: 22px;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(255, 180, 0, 0.95);
+}
+
+.coronation-king-score {
+  position: relative;
+  font-size: 14px;
+  font-weight: 900;
+  color: #ffe66d;
+  margin-bottom: 8px;
+}
+
+.coronation-dethrone-note {
+  position: relative;
+  font-size: 12px;
+  color: #ffdf9e;
+  margin-bottom: 10px;
+}
+
+.coronation-perks-tag {
+  position: relative;
+  background: rgba(34, 2, 4, 0.85);
+  border: 1px solid #ffd147;
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: #fff3b0;
+}

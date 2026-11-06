@@ -1,0 +1,629 @@
+:root {
+  --tet-red-deep: #4a0404;
+  --tet-red: #8f0b13;
+  --tet-red-bright: #d91e2a;
+  --tet-gold-light: #fff3b0;
+  --tet-gold: #ffd147;
+  --tet-gold-deep: #d4940f;
+  --tet-paper: #fff8e7;
+  --panel-bg: #14161f;
+  --panel-card: #1f2330;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background: #0c0d13;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.app-layout {
+  display: flex;
+  gap: 24px;
+  padding: 16px;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.app-layout.obs-mode .control-panel {
+  display: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ================= KHUNG LIVESTREAM 9:16 ================= */
+.live-stage {
+  position: relative;
+  width: 440px;
+  height: 782px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 4px solid var(--tet-gold);
+  box-shadow: 0 0 40px rgba(255, 193, 47, 0.32), inset 0 0 24px rgba(0, 0, 0, 0.65);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: radial-gradient(circle at 50% 42%, #9e1118 0%, #520509 65%, #2c0204 100%);
+  flex-shrink: 0;
+}
+
+.stage-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('../assets/tet-bg.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.85;
+  z-index: 0;
+}
+
+.stage-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(45, 2, 5, 0.72) 0%,
+    rgba(60, 4, 8, 0.18) 32%,
+    rgba(60, 4, 8, 0.22) 68%,
+    rgba(35, 2, 4, 0.88) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+#fxCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.lantern {
+  position: absolute;
+  top: 6px;
+  font-size: 32px;
+  z-index: 6;
+  filter: drop-shadow(0 4px 10px rgba(255, 180, 0, 0.75));
+  animation: swingLantern 3.2s ease-in-out infinite alternate;
+  transform-origin: top center;
+}
+.lantern-left { left: 10px; }
+.lantern-right { right: 10px; animation-delay: -1.6s; }
+
+@keyframes swingLantern {
+  0% { transform: rotate(-7deg); }
+  100% { transform: rotate(7deg); }
+}
+
+/* ================= 1. BẢNG VÀNG THẦN TÀI (TOP 1 - 2 - 3) ================= */
+.top-leaderboard {
+  position: relative;
+  z-index: 5;
+  padding: 8px 10px 4px;
+}
+
+.header-ribbon {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.header-ribbon span {
+  display: inline-block;
+  background: linear-gradient(90deg, #7a090e, #c91822, #7a090e);
+  border: 1.5px solid var(--tet-gold);
+  color: var(--tet-gold-light);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.7px;
+  padding: 3px 14px;
+  border-radius: 999px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+
+.podium-row {
+  display: grid;
+  grid-template-columns: 1fr 1.28fr 1fr;
+  gap: 6px;
+  align-items: end;
+}
+
+.podium-card {
+  background: linear-gradient(180deg, rgba(112, 10, 14, 0.9) 0%, rgba(58, 4, 7, 0.92) 100%);
+  border: 1.5px solid rgba(255, 209, 71, 0.55);
+  border-radius: 12px;
+  padding: 5px 6px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  transition: transform 0.3s ease;
+}
+
+.podium-card.rank-1 {
+  background: linear-gradient(180deg, rgba(168, 22, 18, 0.95) 0%, rgba(88, 8, 10, 0.96) 100%);
+  border: 2px solid var(--tet-gold);
+  box-shadow: 0 0 18px rgba(255, 209, 71, 0.55);
+  padding: 7px 6px;
+}
+
+.crown-icon {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+}
+
+.rank-badge {
+  font-size: 9px;
+  font-weight: 800;
+  color: #ffdf85;
+  margin-bottom: 3px;
+}
+
+.gold-badge {
+  color: #3a0505;
+  background: linear-gradient(90deg, #ffe270, #ffae00, #ffe270);
+  border-radius: 99px;
+  padding: 1px 8px;
+  display: inline-block;
+  font-size: 9.5px;
+}
+
+.avatar-wrap {
+  width: 36px;
+  height: 36px;
+  margin: 2px auto;
+  border-radius: 50%;
+  border: 2px solid #ffcf5c;
+  overflow: hidden;
+  background: #47070a;
+}
+
+.throne-avatar-wrap {
+  width: 46px;
+  height: 46px;
+  border: 2.5px solid #fff099;
+  box-shadow: 0 0 12px #ffbb00;
+}
+
+.podium-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.podium-name {
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #fff;
+}
+
+.podium-score {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: var(--tet-gold);
+}
+
+.gold-score {
+  font-size: 12px;
+  color: #fff394;
+  text-shadow: 0 1px 4px rgba(255, 153, 0, 0.8);
+}
+
+/* ================= 2. KHU VỰC GIỮA: CÂY MAI ĐẠI LỘC ================= */
+.tree-zone {
+  position: relative;
+  z-index: 4;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+}
+
+.tree-level-pill {
+  background: rgba(66, 5, 8, 0.82);
+  border: 1px solid var(--tet-gold);
+  color: var(--tet-gold-light);
+  padding: 2px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  margin-bottom: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+.tree-container {
+  position: relative;
+  width: 310px;
+  height: 310px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tree-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  filter: drop-shadow(0 8px 22px rgba(255, 196, 0, 0.38));
+  transition: transform 0.2s ease;
+}
+
+.tree-container.shake .tree-image {
+  animation: treeShake 0.55s ease-in-out;
+}
+
+@keyframes treeShake {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  20% { transform: rotate(-4deg) scale(1.05); }
+  40% { transform: rotate(4deg) scale(1.06); }
+  60% { transform: rotate(-3deg) scale(1.04); }
+  80% { transform: rotate(3deg) scale(1.02); }
+}
+
+.bloom-layer,
+.ornament-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.extra-blossom {
+  position: absolute;
+  font-size: 18px;
+  filter: drop-shadow(0 0 6px rgba(255, 230, 0, 0.95));
+  animation: blossomPop 0.45s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes blossomPop {
+  0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Bao Lì Xì treo Avatar người xem trên Cây Mai */
+.tree-ornament {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: ornamentSwing 2.8s ease-in-out infinite alternate;
+  transform-origin: top center;
+}
+
+.tree-ornament .ornament-string {
+  width: 2px;
+  height: 8px;
+  background: var(--tet-gold);
+}
+
+.tree-ornament .ornament-badge {
+  position: relative;
+  width: 34px;
+  height: 38px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #e01b24, #91080f);
+  border: 1.5px solid var(--tet-gold);
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
+}
+
+.tree-ornament.vip-ornament .ornament-badge {
+  width: 42px;
+  height: 46px;
+  background: linear-gradient(180deg, #ffe066, #d98200);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.95);
+}
+
+.tree-ornament .ornament-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #fff3b0;
+}
+
+.tree-ornament.vip-ornament .ornament-avatar {
+  width: 34px;
+  height: 34px;
+}
+
+/* ĐẶC QUYỀN SỐ 3: NGAI RỒNG ĐỈNH CÂY MAI CỦA TOP 1 */
+.tree-ornament.king-ornament {
+  z-index: 12;
+}
+
+.tree-ornament.king-ornament .ornament-badge {
+  width: 56px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6a9 0%, #ffae00 60%, #b50912 100%);
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 0 22px rgba(255, 215, 0, 1), 0 0 36px rgba(255, 80, 0, 0.85);
+}
+
+.tree-ornament.king-ornament .ornament-badge::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px dashed #ffe66d;
+  animation: spinHalo 6s linear infinite;
+}
+
+.tree-ornament.king-ornament .king-crown-top {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+  z-index: 2;
+}
+
+.tree-ornament.king-ornament .ornament-avatar {
+  width: 46px;
+  height: 46px;
+  border: 2px solid #fff;
+}
+
+.tree-ornament.king-ornament .ornament-name {
+  background: linear-gradient(90deg, #8c060c, #d9141e, #8c060c);
+  color: #fff59e;
+  border: 1.5px solid #ffd147;
+  font-size: 9.5px;
+  font-weight: 900;
+  max-width: 110px;
+  padding: 2px 7px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.tree-ornament .ornament-name {
+  margin-top: 2px;
+  font-size: 8.5px;
+  font-weight: 800;
+  background: rgba(40, 2, 4, 0.88);
+  color: #ffea9f;
+  padding: 1px 5px;
+  border-radius: 99px;
+  max-width: 68px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 1px solid rgba(255, 209, 71, 0.45);
+}
+
+@keyframes ornamentSwing {
+  0% { transform: translate(-50%, -50%) rotate(-5deg); }
+  100% { transform: translate(-50%, -50%) rotate(5deg); }
+}
+
+@keyframes spinHalo {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Thanh Năng Lượng Khí Xuân Nổ Hũ */
+.energy-bar-wrapper {
+  width: 100%;
+  background: rgba(54, 4, 7, 0.9);
+  border: 1.5px solid var(--tet-gold);
+  border-radius: 12px;
+  padding: 6px 10px;
+  margin-top: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.energy-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--tet-gold-light);
+  margin-bottom: 4px;
+}
+
+.energy-numbers {
+  color: #ffea79;
+  font-weight: 900;
+}
+
+.energy-track {
+  position: relative;
+  height: 13px;
+  background: #2b0204;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 215, 0, 0.45);
+}
+
+.energy-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff9900, #ffe600, #ff3300);
+  border-radius: 999px;
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 0 12px rgba(255, 217, 0, 0.9);
+}
+
+.energy-hint {
+  margin-top: 4px;
+  text-align: center;
+  font-size: 9.8px;
+  color: #ffdf9e;
+}
+
+/* ================= 4. KHU VỰC DƯỚI: ỐNG XĂM GIEO QUẺ & LUẬT CHƠI ================= */
+.bottom-interaction-zone {
+  position: relative;
+  z-index: 5;
+  padding: 0 10px 8px;
+}
+
+.fortune-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, rgba(84, 6, 10, 0.92), rgba(45, 2, 5, 0.96));
+  border: 1.5px solid var(--tet-gold);
+  border-radius: 14px;
+  padding: 8px;
+  margin-bottom: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.55);
+}
+
+.cylinder-wrap {
+  width: 68px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.cylinder-img {
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 209, 71, 0.7);
+  background: #3d0407;
+}
+
+.cylinder-wrap.shaking .cylinder-img {
+  animation: cylinderShake 0.5s ease-in-out infinite;
+}
+
+@keyframes cylinderShake {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25% { transform: rotate(-12deg) translateY(-4px); }
+  50% { transform: rotate(10deg) translateY(2px); }
+  75% { transform: rotate(-8deg) translateY(-3px); }
+}
+
+.cylinder-label {
+  font-size: 9.5px;
+  font-weight: 900;
+  color: var(--tet-gold);
+  margin-top: 2px;
+}
+
+.fortune-card {
+  flex: 1;
+  min-width: 0;
+}
+
+.fortune-card.flash-card {
+  animation: cardPulse 0.4s ease;
+}
+
+@keyframes cardPulse {
+  0% { transform: scale(0.94); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.fortune-card-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 4px;
+}
+
+.fortune-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--tet-gold);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.fortune-user-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.fortune-username {
+  font-size: 12px;
+  font-weight: 800;
+  color: #fff2a8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fortune-comment {
+  font-size: 10px;
+  color: #ffcbd0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fortune-rank {
+  background: linear-gradient(90deg, #ffd147, #ff9900);
+  color: #4a0404;
+  font-size: 9px;
+  font-weight: 900;
+  padding: 2px 7px;
+  border-radius: 99px;
+  flex-shrink: 0;
+}
+
+.fortune-text {
+  font-size: 11px;
+  line-height: 1.32;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.28);
+  padding: 5px 8px;
+  border-radius: 8px;
+  border-left: 3px solid var(--tet-gold);
+  margin-bottom: 4px;
+}
+
+.fortune-upsell {
+  font-size: 9.8px;
+  color: #ffdf7a;
+  font-weight: 700;
+}
+
+.rules-ticker {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(36, 2, 4, 0.92);
+  border: 1px solid rgba(255, 209, 71, 0.55);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 9.2px;
+  color: #ffe9a6;
+}
+
+.ticker-sep {
+  color: var(--tet-gold);
+}
