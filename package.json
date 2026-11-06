@@ -1,0 +1,14 @@
+{
+  "name": "tiktoklive-caymai",
+  "version": "1.0.0",
+  "description": "App Livestream TikTok Tương Tác Ngày Tết - Cây Mai Đại Lộc, Gieo Quẻ Đầu Xuân & Xin Chữ Ông Đồ",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.22.3",
+    "socket.io": "^4.8.4",
+    "tiktok-live-connector": "^2.5.0"
+  }
+}

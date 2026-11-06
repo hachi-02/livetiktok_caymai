@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tết Đại Lộc - Livestream Tương Tác TikTok (Cây Mai & Ông Đồ)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;700;800;900&family=Charm:wght@700&family=Playfair+Display:ital,wght@0,800;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-layout" id="appLayout">
+    <!-- ================= KHUNG MÀN HÌNH LIVESTREAM 9:16 ================= -->
+    <div class="live-stage" id="liveStage">
+      <!-- Lớp nền Tết -->
+      <div class="stage-bg" id="stageBg"></div>
+      <div class="stage-vignette"></div>
+
+      <!-- Canvas Hiệu ứng Pháo Hoa, Hoa Mai Rơi & Mưa Lì Xì -->
+      <canvas id="fxCanvas"></canvas>
+
+      <!-- Đèn lồng trang trí góc trên -->
+      <div class="lantern lantern-left">🏮</div>
+      <div class="lantern lantern-right">🏮</div>
+
+      <!-- 1. KHU VỰC ĐỈNH: NGAI VÀNG THẦN TÀI & BẢNG VÀNG PHÚ QUÝ (TOP 1 - 2 - 3) -->
+      <header class="top-leaderboard">
+        <div class="header-ribbon">
+          <span>🐉 BẢNG VÀNG THẦN TÀI ĐẦU XUÂN 🐉</span>
+        </div>
+
+        <div class="podium-row">
+          <!-- TOP 2 -->
+          <div class="podium-card rank-2" id="rank2Card">
+            <div class="rank-badge">TOP 2</div>
+            <div class="avatar-wrap">
+              <img src="" alt="Top 2" id="rank2Avatar" class="podium-avatar" />
+            </div>
+            <div class="podium-name" id="rank2Name">Chưa có</div>
+            <div class="podium-score" id="rank2Score">0 Lộc</div>
+          </div>
+
+          <!-- TOP 1 - NGAI VÀNG THẦN TÀI -->
+          <div class="podium-card rank-1" id="rank1Card">
+            <div class="crown-icon">👑</div>
+            <div class="rank-badge gold-badge">THẦN TÀI SỐ 1</div>
+            <div class="avatar-wrap throne-avatar-wrap">
+              <img src="" alt="Top 1" id="rank1Avatar" class="podium-avatar" />
+            </div>
+            <div class="podium-name" id="rank1Name">Đang tìm chủ nhân</div>
+            <div class="podium-score gold-score" id="rank1Score">0 Lộc</div>
+          </div>
+
+          <!-- TOP 3 -->
+          <div class="podium-card rank-3" id="rank3Card">
+            <div class="rank-badge">TOP 3</div>
+            <div class="avatar-wrap">
+              <img src="" alt="Top 3" id="rank3Avatar" class="podium-avatar" />
+            </div>
+            <div class="podium-name" id="rank3Name">Chưa có</div>
+            <div class="podium-score" id="rank3Score">0 Lộc</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Băng rôn CHIẾU CHỈ THẦN TÀI PHÁN TRUYỀN (Khi Top 1 gõ Comment) -->
+      <div class="imperial-decree hidden" id="imperialDecreeBanner">
+        <div class="decree-dragon-left">🐉</div>
+        <div class="decree-content">
+          <div class="decree-title">📜 THẦN TÀI <span id="decreeKingName">ĐẠI GIA</span> PHÁN TRUYỀN:</div>
+          <div class="decree-message" id="decreeMessage">“Chúc cả phòng năm mới phát tài!”</div>
+        </div>
+        <div class="decree-dragon-right">🐉</div>
+      </div>
+
+      <!-- Băng rôn báo động nhanh -->
+      <div class="throne-alert hidden" id="throneAlert">
+        <div class="throne-alert-inner">
+          👑 <strong>ĐỔI CHỦ NGAI VÀNG!</strong> <span id="throneAlertText">Đại gia vừa chiếm Top 1 Thần Tài!</span>
+        </div>
+      </div>
+
+      <!-- 2. KHU VỰC GIỮA: CÂY MAI ĐẠI LỘC & TREO AVATAR + THANH NỔ HŨ -->
+      <main class="tree-zone">
+        <div class="tree-level-pill" id="treeLevelPill">🌸 Cây Mai Đại Lộc • Cấp 1</div>
+
+        <div class="tree-container" id="treeContainer">
+          <!-- Ảnh Cây Mai chính -->
+          <img src="assets/cay-mai.png" alt="Cây Mai Đại Lộc" class="tree-image" id="treeImage" />
+
+          <!-- Lớp Hoa Mai nở thêm theo thanh năng lượng -->
+          <div class="bloom-layer" id="bloomLayer"></div>
+
+          <!-- Lớp Treo Bao Lì Xì chứa Avatar người xem (Tối đa 12 vị trí trên cành) -->
+          <div class="ornament-layer" id="ornamentLayer"></div>
+        </div>
+
+        <!-- Thanh Năng Lượng "Khí Xuân Nổ Hũ" -->
+        <div class="energy-bar-wrapper">
+          <div class="energy-header">
+            <span class="energy-title">🧧 TÍCH KHÍ XUÂN — NỔ MƯA LÌ XÌ</span>
+            <span class="energy-numbers" id="energyNumbers">0 / 200</span>
+          </div>
+          <div class="energy-track">
+            <div class="energy-fill" id="energyFill" style="width: 0%"></div>
+            <div class="energy-sparkle"></div>
+          </div>
+          <div class="energy-hint">
+            💬 Cmt: <strong>+2</strong> &nbsp;|&nbsp; 🌹 1 Bông: <strong>+10</strong> &nbsp;|&nbsp; 🔥 Đủ 200/200 thưởng <strong>+1.000 Lộc</strong> chốt hạ!
+          </div>
+        </div>
+      </main>
+
+      <!-- 3. LỚP POPUP TRUNG TÂM: CHIẾU ÔNG ĐỒ TẶNG CHỮ THƯ PHÁP VÀNG (KHI TẶNG BÔNG) -->
+      <div class="calligraphy-modal hidden" id="calligraphyModal">
+        <div class="scroll-roller scroll-top-roller"></div>
+        <div class="scroll-body" id="scrollBody">
+          <div class="scroll-header-tag" id="scrollHeaderTag">✨ QUẺ ĐẠI CÁT HỘ MẠNG ✨</div>
+
+          <!-- Người được vinh danh -->
+          <div class="vip-recipient">
+            <img src="" alt="VIP" class="vip-avatar" id="vipAvatar" />
+            <div class="vip-info">
+              <div class="vip-name" id="vipName">Đại Gia Xuân</div>
+              <div class="vip-gift-tag" id="vipGiftTag">Đã tặng 1 Bông Hồng 🌹</div>
+            </div>
+          </div>
+
+          <!-- Chữ Thư Pháp Vàng chính giữa -->
+          <div class="calligraphy-circle">
+            <div class="calligraphy-char" id="calligraphyChar">ĐẠI LỘC</div>
+            <div class="red-seal" id="redSeal">ẤN<br>XUÂN</div>
+          </div>
+
+          <!-- Câu đối chúc Tết -->
+          <div class="calligraphy-couplet" id="calligraphyCouplet">
+            “Tiền vào như nước sông Đà — Tiền ra nhỏ giọt như cà phê phin”
+          </div>
+
+          <!-- Kết quả mở Bao Lì Xì Gacha -->
+          <div class="lixi-reward-box">
+            <span class="lixi-icon">🧧</span>
+            <span>Hái Lộc Cây Mai: <strong id="vipRewardLoc">+688 LỘC</strong></span>
+          </div>
+        </div>
+        <div class="scroll-roller scroll-bottom-roller"></div>
+      </div>
+
+      <!-- LỚP POPUP NỔ HŨ CÂY MAI (100/100 KHÍ XUÂN) -->
+      <div class="jackpot-banner hidden" id="jackpotBanner">
+        <div class="jackpot-card">
+          <div class="jackpot-icon">🎊🧧🎊</div>
+          <div class="jackpot-title">NỔ HŨ CÂY MAI ĐẠI LỘC!</div>
+          <div class="jackpot-desc" id="jackpotDesc">
+            Chúc mừng người chốt hạ nhận <strong>+1.000 Lộc</strong> & toàn bộ người trên cây nhận <strong>+200 Lộc</strong>!
+          </div>
+        </div>
+      </div>
+
+      <!-- LỚP POPUP ĐẠI LỄ ĐĂNG CƠ TOP 1: RỒNG VÀNG NGUYÊN CON CHẠY DỌC VIỀN BẢNG -->
+      <div class="coronation-modal hidden" id="coronationModal">
+        <!-- Canvas vẽ nguyên con Rồng Vàng dài uốn lượn chạy dọc theo 4 cạnh bảng thông báo -->
+        <canvas id="dragonBorderCanvas" width="430" height="390"></canvas>
+
+        <div class="coronation-card">
+          <div class="coronation-halo"></div>
+          <!-- 4 góc hoa văn cung đình -->
+          <div class="imperial-corner corner-tl"></div>
+          <div class="imperial-corner corner-tr"></div>
+          <div class="imperial-corner corner-bl"></div>
+          <div class="imperial-corner corner-br"></div>
+
+          <div class="coronation-top-crest">👑 KIM BÀI CỬU LONG • SOÁN NGÔI TOP 1 👑</div>
+          <div class="coronation-subtitle">TÂN ĐỆ NHẤT THẦN TÀI ĐĂNG CƠ</div>
+
+          <div class="coronation-avatar-stage">
+            <div class="coronation-avatar-ring">
+              <div class="coronation-crown">👑</div>
+              <img src="" alt="Tân Thần Tài" id="coronationAvatar" class="coronation-avatar" />
+            </div>
+          </div>
+
+          <div class="coronation-king-name" id="coronationKingName">Hùng Đại Gia</div>
+          <div class="coronation-king-score" id="coronationKingScore">Tổng Lộc: 8.888 Lộc</div>
+
+          <div class="coronation-dethrone-note" id="coronationDethroneNote">
+            Chính thức soán ngôi và độc chiếm đỉnh Cây Mai Đại Lộc!
+          </div>
+
+          <div class="coronation-perks-tag">
+            ⚡ Đặc quyền Vua: <strong>Comment Loa AI Đọc Chiếu Chỉ</strong> & <strong>Ấn Rồng Đế Vương</strong>!
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. KHU VỰC DƯỚI: ỐNG XĂM GIEO QUẺ (BÊN TRÁI) & NHẬT KÝ LỘC (BÊN PHẢI) -->
+      <section class="bottom-interaction-zone">
+        <!-- Khu Ống Xăm Tết -->
+        <div class="fortune-box">
+          <div class="cylinder-wrap" id="cylinderWrap">
+            <img src="assets/ong-xam.png" alt="Ống Xăm Tết" class="cylinder-img" id="cylinderImg" />
+            <div class="cylinder-label">GIEO QUẺ</div>
+          </div>
+
+          <!-- Thẻ Quẻ hiện ra khi có người Comment -->
+          <div class="fortune-card" id="fortuneCard">
+            <div class="fortune-card-header">
+              <img src="" alt="User" class="fortune-avatar" id="fortuneAvatar" />
+              <div class="fortune-user-meta">
+                <div class="fortune-username" id="fortuneUsername">Khách Du Xuân</div>
+                <div class="fortune-comment" id="fortuneComment">Comment năm sinh để xin quẻ!</div>
+              </div>
+              <span class="fortune-rank" id="fortuneRank">THƯỢNG CÁT</span>
+            </div>
+            <div class="fortune-text" id="fortuneText">
+              💬 Gõ <strong>Năm Sinh (VD: 1998, 2003)</strong> hoặc <strong>Xin Quẻ</strong> để lắc ống xăm xem vận hạn đầu năm!
+            </div>
+            <div class="fortune-upsell">
+              👉 Tặng <strong>1 Bông Hồng 🌹</strong> để nhận <strong>Chữ Ông Đồ Vàng</strong> in tên & Mở Lì Xì đua Top!
+            </div>
+          </div>
+        </div>
+
+        <!-- Thanh chạy Hướng Dẫn Luật Chơi dưới đáy -->
+        <footer class="rules-ticker">
+          <div class="ticker-item">💬 <strong>Cmt Năm Sinh:</strong> Gieo Quẻ (+10 Lộc)</div>
+          <div class="ticker-sep">•</div>
+          <div class="ticker-item">🌹 <strong>1 Bông:</strong> Chữ Ông Đồ VIP + Mở Lì Xì (68–888 Lộc)</div>
+          <div class="ticker-sep">•</div>
+          <div class="ticker-item">🔥 <strong>Combo 5+ Bông:</strong> Rồng Phượng Đại Cát (888–9999 Lộc)</div>
+        </footer>
+      </section>
+    </div>
+
+    <!-- ================= BẢNG ĐIỀU KHIỂN & CHẾ ĐỘ GIẢ LẬP (CHO CHỦ KÊNH) ================= -->
+    <aside class="control-panel" id="controlPanel">
+      <div class="panel-header">
+        <h2>🎛️ Điều Khiển & Test Live Tết</h2>
+        <p>Thử nghiệm hiệu ứng ngay hoặc kết nối phòng TikTok Live thật</p>
+      </div>
+
+      <!-- Kết nối TikTok Live thật -->
+      <div class="panel-card">
+        <h3>📡 1. Kết nối TikTok Live Thật</h3>
+        <div class="input-group">
+          <input type="text" id="tiktokUsernameInput" placeholder="Nhập @username đang live..." />
+          <button class="btn btn-primary" id="connectBtn">Kết nối</button>
+          <button class="btn btn-outline" id="disconnectBtn" title="Ngắt kết nối">Ngắt</button>
+        </div>
+        <div class="status-pill" id="connectionStatus">
+          ⚪ Chế độ Giả lập (Chưa kết nối TikTok)
+        </div>
+      </div>
+
+      <!-- Bộ nút Giả lập Tương tác (Test Mode) -->
+      <div class="panel-card">
+        <h3>🧪 2. Giả lập Tương tác (Test Ngay)</h3>
+
+        <div class="sim-custom-row">
+          <input type="text" id="simNameInput" placeholder="Tên người test (để trống = ngẫu nhiên)" />
+          <input type="text" id="simCommentInput" placeholder="Nội dung cmt (VD: 1999, Xin quẻ tài lộc)" />
+        </div>
+
+        <div class="sim-buttons-grid">
+          <button class="btn btn-sim-comment" id="btnSimComment">
+            💬 Giả lập Comment Xin Quẻ
+            <small>+10 Lộc • Lắc Ống Xăm • Treo Cây Mai</small>
+          </button>
+
+          <button class="btn btn-sim-rose" id="btnSimRose1">
+            🌹 Giả lập Tặng 1 Bông Hồng
+            <small>Mở Chiếu Ông Đồ Vàng • Hái Lì Xì 68–888 Lộc</small>
+          </button>
+
+          <button class="btn btn-sim-combo" id="btnSimRose10">
+            🔥 Giả lập Combo 10 Bông (VIP)
+            <small>Đại Cát Hoàng Kim • Nổ Lì Xì 888–9999 Lộc</small>
+          </button>
+
+          <button class="btn btn-sim-jackpot" id="btnSimJackpot">
+            💥 Kích Nổ Hũ Cây Mai (200/200)
+            <small>Mưa Lì Xì toàn phòng • Thưởng +1.000 Lộc</small>
+          </button>
+
+          <button class="btn btn-sim-king-chat" id="btnSimKingChat">
+            🗣️👑 Test Top 1 Gõ Comment (Phán Truyền)
+            <small>Hiện Chiếu Chỉ Vàng • Loa AI đọc to câu cmt</small>
+          </button>
+
+          <button class="btn btn-sim-coronation" id="btnSimCoronation">
+            🐉🐦‍🔥 Test Soán Ngôi Top 1 (Rồng Phượng)
+            <small>Đại lễ Rồng Bay Phượng Múa đăng cơ</small>
+          </button>
+        </div>
+
+        <div class="auto-demo-row">
+          <button class="btn btn-auto" id="btnAutoDemo">
+            🤖 Bật Tự Động Mô Phỏng Phòng Đông Người
+          </button>
+        </div>
+      </div>
+
+      <!-- Cài đặt Âm thanh, OBS & Đổi Ảnh Asset -->
+      <div class="panel-card">
+        <h3>🎨 3. Âm thanh, OBS & Đổi Hình Ảnh (Asset)</h3>
+        <div class="toggles-row">
+          <label class="toggle-label">
+            <input type="checkbox" id="soundToggle" checked />
+            🔊 Hiệu ứng Âm thanh (Pháo, Trống, Lắc xăm)
+          </label>
+          <label class="toggle-label">
+            <input type="checkbox" id="ttsToggle" checked />
+            🗣️ Giọng đọc AI gọi tên người tặng bông
+          </label>
+        </div>
+
+        <div class="asset-upload-grid">
+          <label class="file-btn">
+            🖼️ Đổi ảnh Cây Mai (.png)
+            <input type="file" id="uploadTreeInput" accept="image/*" hidden />
+          </label>
+          <label class="file-btn">
+            🏮 Đổi ảnh Nền Tết
+            <input type="file" id="uploadBgInput" accept="image/*" hidden />
+          </label>
+          <label class="file-btn">
+            🎋 Đổi ảnh Ống Xăm
+            <input type="file" id="uploadCylinderInput" accept="image/*" hidden />
+          </label>
+          <button class="btn btn-outline btn-sm" id="btnObsMode">
+            🖥️ Chế độ Quay OBS / Ẩn Bảng Này (Phím H)
+          </button>
+        </div>
+      </div>
+
+      <!-- Nhật ký sự kiện trực tiếp -->
+      <div class="panel-card log-card">
+        <div class="log-header">
+          <h3>📜 Nhật ký Tương tác</h3>
+          <button class="btn-link" id="btnResetLeaderboard">Xoá Bảng Top</button>
+        </div>
+        <div class="event-log" id="eventLog"></div>
+      </div>
+    </aside>
+
+    <!-- Nút nổi để mở lại bảng điều khiển khi đang ở chế độ OBS -->
+    <button class="floating-restore-btn hidden" id="restorePanelBtn" title="Hiện lại bảng điều khiển (Phím H)">
+      ⚙️ Hiện Điều Khiển
+    </button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
